@@ -1,0 +1,11 @@
+## .gitignore 忽略文件列表
+node_modules/
+sass/
+
+##
+.idea
+.vscode
+.wmv
+package-lock.json
+.psd
+.log

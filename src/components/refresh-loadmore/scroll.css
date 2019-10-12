@@ -1,0 +1,28 @@
+.refresh, .content .loadmore{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.refresh img, .content .loadmore img{
+  width: 20px;
+  height: 20px;
+  transition: 300ms;
+}
+.loadmore img{
+  transform: rotate(180deg);
+}
+.refresh img.active{
+  transform: rotate(180deg);
+}
+.loadmore img.active{
+  transform: rotate(0);
+}
+
+.refresh span, .content .loadmore span{
+  height: 20px;
+  font-size: 14px;
+  color: #454545;
+  line-height: 20px;
+}

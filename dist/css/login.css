@@ -1,0 +1,168 @@
+.header {
+  width: 100%;
+  height: 90px;
+  background-color: #00b38a;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.header h1 {
+  font-size: 40px;
+  color: #fff;
+}
+.header .iconfont {
+  height: 90px;
+  line-height: 90px;
+  position: absolute;
+  top: 0;
+  padding: 0 10px;
+  font-size: 40px;
+  color: #fff;
+}
+.header .iconfont:nth-of-type(1) {
+  left: 10px;
+}
+.header .iconfont:nth-of-type(2) {
+  right: 10px;
+}
+
+.hideNone {
+  display: none;
+}
+
+.content {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+.content .loginCommon {
+  width: 100%;
+  margin-top: 100px;
+}
+.content .loginCommon .tel {
+  width: 100%;
+  height: 80px;
+}
+.content .loginCommon .tel input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .loginCommon .psw {
+  width: 100%;
+  height: 80px;
+}
+.content .loginCommon .psw input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .loginByPhone {
+  width: 100%;
+  margin-top: 100px;
+}
+.content .loginByPhone .tel {
+  width: 100%;
+  height: 80px;
+}
+.content .loginByPhone .tel input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .loginByPhone .psw {
+  width: 100%;
+  height: 80px;
+  position: relative;
+}
+.content .loginByPhone .psw input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .loginByPhone .psw .getCode {
+  height: 80px;
+  line-height: 80px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 24px;
+  color: #444;
+}
+.content .loginWrap {
+  width: 100%;
+  height: 200px;
+  margin-top: 30px;
+}
+.content .loginWrap .login {
+  width: 80%;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  background-color: #00b38a;
+  color: #fff;
+  font-size: 30px;
+  border-radius: 10px;
+}
+.content .waysByPhone {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.content .waysByPhone .mobile {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
+.content .waysByPhone .register {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
+.content .waysByPassword {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.content .waysByPassword .mobile {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
+.content .waysByPassword .register {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}

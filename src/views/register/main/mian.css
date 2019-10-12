@@ -1,0 +1,105 @@
+.content {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+.content .registerByPhone {
+  width: 100%;
+  margin-top: 100px;
+}
+.content .registerByPhone .tel {
+  width: 100%;
+  height: 80px;
+}
+.content .registerByPhone .tel input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .registerByPhone .psw {
+  width: 100%;
+  height: 80px;
+  position: relative;
+}
+.content .registerByPhone .psw input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  box-sizing: border-box;
+  text-indent: 2em;
+}
+.content .registerByPhone .psw .getCode {
+  height: 80px;
+  line-height: 80px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 24px;
+  color: #444;
+}
+.content .registerWrap {
+  width: 100%;
+  height: 200px;
+  margin-top: 30px;
+}
+.content .registerWrap .register {
+  width: 80%;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  background-color: #00b38a;
+  color: #fff;
+  font-size: 30px;
+  border-radius: 10px;
+}
+.content .waysByPhone {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.content .waysByPhone .agreenWrap {
+  font-size: 24px;
+  color: #ccc;
+  flex: 9;
+}
+.content .waysByPhone .agreenWrap a {
+  font-size: 24px;
+  color: #444;
+}
+.content .waysByPhone .login {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
+.content .waysByPassword {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.content .waysByPassword .mobile {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
+.content .waysByPassword .register {
+  font-size: 28px;
+  color: #00b38a;
+  flex: 1;
+  text-align: center;
+}
