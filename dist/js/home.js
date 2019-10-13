@@ -45,13 +45,13 @@ var JOB_DETAIL_API = HOST + '/api/jobs/detail';
 var SEND_CODE_API = HOST + '/api/user/get_code';
 
 // 登录的校验验证码
-var LOGIN_API = '/api/user/login/confirm_code';
+var LOGIN_API = HOST + '/api/user/login/confirm_code';
 
 // 注册的api
-var REGIESTER_API = '/api/user/regiester/confirm_code';
+var REGIESTER_API = HOST + '/api/user/regiester/confirm_code';
 
 // 用户注销
-var LOGOUT_API = '/api/user/login_out';
+var LOGOUT_API = HOST + '/api/user/login_out';
 // 关于用户的操作
 
 // 是否登录
@@ -211,12 +211,12 @@ function Scroll(dom, options){
   myScroll.on('scroll', function(){
     if(myScroll.y >= 0){
       //达到了可以下拉刷新的条件
-      refreshImg.className = 'active';
-      refreshText.innerText = '释放立即刷新...';
+      refreshImg && (refreshImg.className = 'active');
+      refreshText && (refreshText.innerText = '释放立即刷新...');
     }else{
       //没有达到条件
-      refreshImg.className = '';
-      refreshText.innerText = '下拉可以刷新...';
+      refreshImg && (refreshImg.className = '');
+      refreshText && (refreshText.innerText = '下拉可以刷新...');
     }
   })
   
@@ -224,15 +224,15 @@ function Scroll(dom, options){
   myScroll.on('scrollEnd', function(){
     if(myScroll.y >= 0){
       //达到了可以下拉刷新的条件，触发下拉刷新
-      refreshImg.src = loadingPath;
-      refreshText.innerText = '正在刷新...';
+      refreshImg && (refreshImg.src = loadingPath);
+      refreshText && (refreshText.innerText = '正在刷新...');
       //告诉外部下拉刷新触发了。让外部执行相关操作
       (options.canrefresh && options.refreshData) && options.refreshData(function(){
         // 刷新
         myScroll.refresh();
         //停止下拉刷新的方法
-        refreshImg.src = arrowPath;
-        refreshText.innerText = '下拉可以刷新...';
+        refreshImg && (refreshImg.src = arrowPath);
+        refreshImg && (refreshText.innerText = '下拉可以刷新...');
         myScroll.scrollTo(0, -50, 300);
       });
       
@@ -258,13 +258,13 @@ function Scroll(dom, options){
     var y = myScroll.y;
     if(maxY >= y){
       //触发了
-      loadmoreImg.className = 'active';
-      loadmoreText.innerText = '释放立即加载更多...';
+      loadmoreImg && (loadmoreImg.className = 'active');
+      loadmoreText && (loadmoreText.innerText = '释放立即加载更多...');
     }
     else{
       //没有触发
-      loadmoreImg.className = '';
-      loadmoreText.innerText = '上拉可以加载更多...';
+      loadmoreImg && (loadmoreImg.className = '');
+      loadmoreText && (loadmoreText.innerText = '上拉可以加载更多...');
     }
   })
 
@@ -283,14 +283,14 @@ function Scroll(dom, options){
     }
     else if(y <= maxY){
       //可以看见全部上拉可以加载更多的dom结构，触发上拉加载更多
-      loadmoreImg.src = loadingPath;
-      loadmoreText.innerText = '正在加载中...';
+      loadmoreImg && (loadmoreImg.src = loadingPath);
+      loadmoreText && (loadmoreText.innerText = '正在加载中...');
       // 告诉外部触发了加载更多
       (options.canloadmore && options.loadmoreData) && options.loadmoreData(function(){
         // 刷新
         myScroll.refresh();
-        loadmoreImg.src = arrowPath;
-      loadmoreText.innerText = '上拉可以加载更多...';
+        loadmoreImg && (loadmoreImg.src = arrowPath);
+        loadmoreText && (loadmoreText.innerText = '上拉可以加载更多...');
       });
     }
   })
@@ -542,13 +542,6 @@ initTabbar(tabbar);
     });
 
   });
-
-
-
-
-
-
-
 
 
 

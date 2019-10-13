@@ -39,5 +39,13 @@ module.exports = {
     './src/components/header/header.css',
     // 自身样式
     './src/views/register/**/*.css'
+  ],
+  jobDetail: [
+    // 组件样式
+    './src/components/loading/loading.css',
+    './src/components/header/header.css',
+    './src/components/company/company.css',
+    // 自身样式
+    './src/views/jobDetail/**/*.css'
   ]
 }

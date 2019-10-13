@@ -3,7 +3,8 @@ module.exports = [
   './src/views/mime/*.html',
   './src/views/search/*.html',
   './src/views/login/*.html',
-  './src/views/register/*.html'
+  './src/views/register/*.html',
+  './src/views/jobDetail/*.html'
 ]
   
 

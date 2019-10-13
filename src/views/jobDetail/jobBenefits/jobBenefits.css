@@ -1,0 +1,32 @@
+.jobBenefits {
+  width: 100%;
+  padding: 30px 30px;
+}
+.jobBenefits .list {
+  width: 100%;
+  box-sizing: border-box;
+}
+.jobBenefits .list .list-item {
+  float: left;
+  color: #333;
+  font-size: 28px;
+  width: 33.33%;
+  margin-bottom: 35px;
+}
+.jobBenefits .list .list-item em {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+  font-size: 20px;
+  color: #00b38a;
+}
+.jobBenefits .list .list-item span {
+  display: inline-block;
+  vertical-align: middle;
+  color: #444;
+}
+.jobBenefits P {
+  font-size: 28px;
+  color: #888;
+}

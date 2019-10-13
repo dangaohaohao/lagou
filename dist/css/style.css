@@ -150,3 +150,12 @@ li {
   white-space: nowrap;
 }
 
+/* 清除浮动 */
+.clear:after {
+	content: "";
+	display: block;
+	height: 0;
+	overflow: hidden;
+	clear: both;
+}
+

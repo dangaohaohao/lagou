@@ -39,7 +39,14 @@ module.exports = {
     './src/utils/user.js',
     './src/components/header/header.js',
     './src/views/register/**/*.js'
+  ],
+  jobDetail: [
+    './src/utils/flexible.js',
+    './src/utils/api.js',
+    './src/utils/user.js',
+    './src/components/loading/loading.js',
+    './src/components/header/header.js',
+    './src/components/company/company.js',
+    './src/views/jobDetail/**/*.js'
   ]
 }
-
-

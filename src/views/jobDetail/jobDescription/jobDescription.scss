@@ -1,0 +1,17 @@
+$mainColor: #00b38a;
+$otherColor: #d2f9f0;
+  
+  // 职位描述
+  .jobDescription {
+    h4 {
+      font-size: 26px;
+      color: $mainColor;
+      padding: 20px 30px;
+      background-color: $otherColor;
+    }
+    p {
+      font-size: 24px;
+      color: #888;
+      padding: 82px 30px 30px;
+    }
+  }

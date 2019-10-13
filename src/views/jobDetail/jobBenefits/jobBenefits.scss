@@ -1,0 +1,41 @@
+$mainColor: #00b38a;
+$otherColor: #d2f9f0;
+
+  // 工作福利
+  .jobBenefits {
+    width: 100%;
+    padding: 30px 30px;
+
+    .list {
+      width: 100%;
+      box-sizing: border-box;
+
+      .list-item {
+        float: left;
+        color: #333;
+        font-size: 28px;
+        width: 33.33%;
+        margin-bottom: 35px;
+
+        em {
+          display: inline-block;
+          height: 24px;
+          width: 24px;
+          vertical-align: middle;
+          font-size: 20px;
+          color: $mainColor;
+        }
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          color: #444;
+        }
+      }
+    }
+    
+    // 职位诱惑
+    P {
+      font-size: 28px;
+      color: #888;
+    }
+  }

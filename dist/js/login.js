@@ -45,13 +45,13 @@ var JOB_DETAIL_API = HOST + '/api/jobs/detail';
 var SEND_CODE_API = HOST + '/api/user/get_code';
 
 // 登录的校验验证码
-var LOGIN_API = '/api/user/login/confirm_code';
+var LOGIN_API = HOST + '/api/user/login/confirm_code';
 
 // 注册的api
-var REGIESTER_API = '/api/user/regiester/confirm_code';
+var REGIESTER_API = HOST + '/api/user/regiester/confirm_code';
 
 // 用户注销
-var LOGOUT_API = '/api/user/login_out';
+var LOGOUT_API = HOST + '/api/user/login_out';
 // 关于用户的操作
 
 // 是否登录
