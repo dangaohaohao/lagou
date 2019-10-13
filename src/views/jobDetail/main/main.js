@@ -96,7 +96,7 @@
     `;
 
     $wrap.append(dom);
-
+    myScroll.refresh();
   });
 
   // 滚动视图内容

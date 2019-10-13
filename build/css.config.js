@@ -9,6 +9,7 @@ module.exports = {
     './src/components/header/header.css',
     './src/components/refresh-loadmore/scroll.css',
     './src/components/tabbar/tabbar.css',
+    './src/components/list/list.css',
     // 自身样式
     './src/views/home/**/*.css'
   ],
@@ -25,6 +26,7 @@ module.exports = {
     './src/components/loading/loading.css',
     './src/components/refresh-loadmore/scroll.css',
     './src/components/tabbar/tabbar.css',
+    './src/components/list/list.css',
     // 自身样式
     './src/views/search/**/*.css'
   ],

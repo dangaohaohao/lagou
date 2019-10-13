@@ -53,6 +53,10 @@ var REGIESTER_API = HOST + '/api/user/regiester/confirm_code';
 // 用户注销
 var LOGOUT_API = HOST + '/api/user/login_out';
 
+// 搜索职位关键字搜索列表
+var SEARCH_BY_KEY = HOST + '/api/jobs/jobs_list/by_keyword';
+
+
 
   //  loadingWrap 模板
   // <div class="loadingWrap">
@@ -287,4 +291,177 @@ initTabbar(tabbar);
 
 })();
 
+(function () {
 
+  // 当我们点击搜索图标或者按下按键的时候，获取参数,发送请求
+  // 输入的值还需要存入 localStorage 中，当点击删除的时候需要删除
+  // searchKey: []
+  $('.search').click(function () {
+    let val = $('.searchIpt').val();
+    if (!val) {
+      return;
+    }
+    searchByKey(val);
+    addKey(val);
+    $('.searchList').html('');
+  });
+  $(document).keydown(function (e) {
+    // 如果按键码为 13，发送请求
+    if (e.keyCode == 13) {
+      let val = $('.searchIpt').val();
+      if (!val) {
+        return;
+      }
+      searchByKey(val);
+      addKey(val);
+      $('.searchList').html('');
+    }
+  });
+  // 监听按键值的变化
+  $(document).keyup(function () {
+    let val = $('.searchIpt').val();
+    if (!val) {
+      $('.list').html('');
+      let searchDom = createSearchDom();
+      $('.searchList').html(searchDom);
+      scroll.refresh();
+    }
+  });
+
+  // 当点击搜索关键字的删除时:
+  // 移除这个搜索关键字
+  // 重新渲染 刷新野蛮
+  $('.searchList').on('click', '.delete-search', function () {
+    let key = $(this).parent().children('.ketText').text();
+    removeKey(key);
+    let searchDom = createSearchDom();
+    $('.searchList').html(searchDom);
+    scroll.refresh();
+  });
+
+
+ // 发送 ajax 请求，动态渲染数据
+function searchByKey(key) {
+  $.ajax({
+    type: 'get',
+    url: SEARCH_BY_KEY,
+    data: {
+      keyword: key
+    },
+    success: function (data) {
+      if (data.status == 0) {
+        // 数据请求成功
+        let itemDom = createListDom(data.data);
+        $('.wrap .list').html(itemDom);
+        scroll.refresh();
+      } else {
+        console.log('数据请求失败');
+      }
+    },
+    error: function (err) {
+      console.log('网络繁忙，数据请求失败');
+    }
+  });
+}
+
+// 创建 dom 
+function createListDom(data) {
+  let itemDom = '';
+  for (let i = 0, len = data.length; i < len; i++) {
+    let item = data[i];
+    itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
+      <div class="left">\
+        <img src="' + item.companyPic + '">\
+      </div>\
+      <div class="center">\
+        <h3 class="title">' + item.company + '</h3>\
+        <p class="info">' + item.job + '</p>\
+        <p class="time">' + item.publish + '</p>\
+      </div>\
+      <div class="right text-center">' + item.minSalary + 'k-' + item.maxSalary + 'k</div>\
+    </li>';
+  }
+  return itemDom;
+}
+
+// 创建 scroll 滚动视图
+let scroll = new IScroll('.content', {
+  tap: true,
+  click: true,
+});
+
+
+})();
+
+
+  // 判断缓存中是否有
+  function hasSearchKey() {
+    return localStorage.getItem('searchKey') == null ? 'false' : 'true';
+  }
+
+  // 存入缓存中
+  function addKey(key) {
+    if (hasSearchKey() == 'true') {
+      // 有这个 key, 需要先取出来再存进去
+      let arr = JSON.parse(localStorage.getItem('searchKey'));
+      // 如果缓存中存在就不存了
+      if (arr.includes(key)) {
+        return;
+      }
+      arr.push(key);
+      localStorage.setItem('searchKey', JSON.stringify(arr));
+    }else {
+      // 没有这个 key，直接存进去
+      console.log(key);
+      let arr = [];
+      arr.push(key);
+      localStorage.setItem('searchKey', JSON.stringify(arr));
+    }
+  }
+
+  // 删除某个 key
+  function removeKey(key) {
+    // 既然可以点删除说明是存在的
+    let index ;
+    let arr = JSON.parse(localStorage.getItem('searchKey'));
+    for(let i = 0, len = arr.length; i < len; i ++) {
+      if (arr[i] == key) {
+        index = i;
+      }
+    }
+    arr.splice(index, 1);
+    localStorage.setItem('searchKey', JSON.stringify(arr));
+  }
+
+  // 创建 dom
+  function createSearchDom() {
+    if (hasSearchKey() == 'false') {
+      return;
+    }
+    let arr = JSON.parse(localStorage.getItem('searchKey'));
+    let searchDom = '';
+    for(let i = 0, len = arr.length; i < len; i ++) {
+      searchDom += `<li class="search-item text-center">
+      <span class="oneline-ellipsis ketText">${arr[i]}</span>
+      <span  class="iconfont icon-fanhui delete-search"></span>
+    </li>`;
+    }
+    return searchDom;
+  }
+  
+
+
+
+
+// 点击每个 list-item 跳转到职位详情页
+
+$('.content .list').on('click', '.list-item', function() {
+  let id = $(this).attr('data-id');
+  let job = $(this).attr('data-job');
+
+  sessionStorage.setItem('job-params', JSON.stringify({
+    id,
+    job
+  }));
+  window.location.href = './jobDetail.html';
+});

@@ -17,3 +17,6 @@ var REGIESTER_API = HOST + '/api/user/regiester/confirm_code';
 
 // 用户注销
 var LOGOUT_API = HOST + '/api/user/login_out';
+
+// 搜索职位关键字搜索列表
+var SEARCH_BY_KEY = HOST + '/api/jobs/jobs_list/by_keyword';

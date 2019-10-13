@@ -25,7 +25,7 @@ let map = {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     setTimeout(function() {
       response.end(result);
-    }, 1000);
+    });
   },
   // 请求注销
   '/api/user/login_out'(response) {
@@ -96,10 +96,31 @@ let map = {
     });
     let result = JSON.stringify(obj);
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
-    setTimeout(() => {
       response.end(result); 
+  },
+  // 搜索职位关键字搜索列表
+  '/api/jobs/jobs_list/by_keyword'(response) {
+    let obj = Mock.mock({
+      message: 'ok',
+      status: 0,
+      'data|10': [
+        {
+          'id|+1': 1,
+          'company': '@ctitle',
+          'companyPic': '@image(120x120, @color, @color, @name)',
+          'job': '前端开发工程师',
+          'city': '@city',
+          'minSalary|8-10': 0,
+          'maxSalary|10-15': 0,
+          'publish': '@date'
+        }
+      ]
     });
-  }
+    let result = JSON.stringify(obj);
+
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
+    response.end(result);
+  },
 }
 
 

@@ -7,6 +7,7 @@ module.exports = {
     './src/components/refresh-loadmore/scroll.js',
     './src/components/header/header.js',
     './src/components/tabbar/tabbar.js',
+    './src/components/list/list.js',
     './src/views/home/**/*.js'
   ],
   mime: [
@@ -21,7 +22,6 @@ module.exports = {
     './src/utils/flexible.js',
     './src/utils/api.js',
     './src/components/loading/loading.js',
-    './src/components/refresh-loadmore/scroll.js',
     './src/components/header/header.js',
     './src/components/tabbar/tabbar.js',
     './src/views/search/**/*.js'
