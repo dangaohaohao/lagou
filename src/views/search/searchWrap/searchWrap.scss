@@ -3,9 +3,6 @@ $otherColor: #d2f9f0;
 
 // searchWrap
 .searchWrap {
-  position: absolute;
-  top: 98px;
-  left: 0;
   width: 100%;
   height: 98px;
   display: flex;
@@ -14,7 +11,7 @@ $otherColor: #d2f9f0;
 
   // cityOption
   .cityOption {
-    width: 180px;
+    width: 137px;
     height: 98px;
     box-sizing: border-box;
     border-right: 1px solid #ccc;

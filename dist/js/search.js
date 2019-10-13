@@ -92,133 +92,6 @@ var SEARCH_BY_KEY = HOST + '/api/jobs/jobs_list/by_keyword';
   }
 
 
-function Scroll(dom, options){
-  options = options || {};
-  options.probeType = 3;
-  // 控制下拉刷新的条件
-  options.canrefresh = false;
-  options.canloadmore = false;
-
-  var myScroll = new IScroll(dom, options);
-  
-  myScroll.scrollTo(0, -50, 0);
-  
-  
-  
-  var refreshImg = document.querySelector('.refresh img');
-  var refreshText = document.querySelector('.refresh span');
-  var loadmoreImg = document.querySelector('.loadmore img');
-  var loadmoreText = document.querySelector('.loadmore span');
-
-  let loadingPath = '../assets/loading.gif';
-  let arrowPath = '../assets/arrow.jpg';
-
-
-  // 提供刷新dom的方法
-  myScroll.on('beforeScrollStart', function(){
-    // 识别当前可以滚动的最新高度
-    myScroll.refresh();
-  })
-  
-  
-  // 监听正在滚动，处理下拉刷新
-  myScroll.on('scroll', function(){
-    if(myScroll.y >= 0){
-      //达到了可以下拉刷新的条件
-      refreshImg && (refreshImg.className = 'active');
-      refreshText && (refreshText.innerText = '释放立即刷新...');
-    }else{
-      //没有达到条件
-      refreshImg && (refreshImg.className = '');
-      refreshText && (refreshText.innerText = '下拉可以刷新...');
-    }
-  })
-  
-  // 监听滚动停止的事件，处理下拉刷新
-  myScroll.on('scrollEnd', function(){
-    if(myScroll.y >= 0){
-      //达到了可以下拉刷新的条件，触发下拉刷新
-      refreshImg && (refreshImg.src = loadingPath);
-      refreshText && (refreshText.innerText = '正在刷新...');
-      //告诉外部下拉刷新触发了。让外部执行相关操作
-      (options.canrefresh && options.refreshData) && options.refreshData(function(){
-        // 刷新
-        myScroll.refresh();
-        //停止下拉刷新的方法
-        refreshImg && (refreshImg.src = arrowPath);
-        refreshImg && (refreshText.innerText = '下拉可以刷新...');
-        myScroll.scrollTo(0, -50, 300);
-      });
-      
-    }
-    else if(myScroll.y > -50 && myScroll.y < 0){
-      //可以看见部分下拉可以刷新的dom，收回下拉可以刷新的dom
-      myScroll.scrollTo(0, -50, 300);
-    }
-    else{//myScroll.y < -50 ,正常滚动
-  
-    }
-  })
-
-  // 控制是否可以下拉刷新
-  this.setCanRefresh = function(bool) {
-    options.canrefresh = bool;
-  }
-
-
-  // 监听正在滚动，处理上拉加载更多
-  myScroll.on('scroll', function(){
-    var maxY = myScroll.maxScrollY;
-    var y = myScroll.y;
-    if(maxY >= y){
-      //触发了
-      loadmoreImg && (loadmoreImg.className = 'active');
-      loadmoreText && (loadmoreText.innerText = '释放立即加载更多...');
-    }
-    else{
-      //没有触发
-      loadmoreImg && (loadmoreImg.className = '');
-      loadmoreText && (loadmoreText.innerText = '上拉可以加载更多...');
-    }
-  })
-
-  // 监听滚动停止的事件，处理上拉加载更多
-  myScroll.on('scrollEnd', function(){
-    var maxY = myScroll.maxScrollY;
-    var minY = maxY + 50;
-    var y = myScroll.y;
-    // console.log('maxY:', maxY, 'y:', y);
-    if(y >= minY){
-      //正常滚动
-    }
-    else if(y < minY && y > maxY){
-      //可以看见部分上拉可以加载更多的dom结构，收回
-      myScroll.scrollTo(0, minY, 300);
-    }
-    else if(y <= maxY){
-      //可以看见全部上拉可以加载更多的dom结构，触发上拉加载更多
-      loadmoreImg && (loadmoreImg.src = loadingPath);
-      loadmoreText && (loadmoreText.innerText = '正在加载中...');
-      // 告诉外部触发了加载更多
-      (options.canloadmore && options.loadmoreData) && options.loadmoreData(function(){
-        // 刷新
-        myScroll.refresh();
-        loadmoreImg && (loadmoreImg.src = arrowPath);
-        loadmoreText && (loadmoreText.innerText = '上拉可以加载更多...');
-      });
-    }
-  })
-
-  // 控制是否可以上拉加载更多的方法
-  this.setCanLoadmore = function(bool) {
-    options.canloadmore = bool;
-  }
-
-
-
-}
-
-
 (function () {
 
   // 点击返回按钮，返回上一页
@@ -291,6 +164,56 @@ initTabbar(tabbar);
 
 })();
 
+// 获取本地 data 中的 json 数据
+function getCities() {
+  $.ajax({
+    type: 'get',
+    url: '../../data/cities.json',
+    success: function (data) {
+      let cityDom = createCityList(data);
+      $('.content .cityList').html(cityDom);
+    },
+    error: function (err) {
+      console.log('获取城市列表出错');
+    }
+  });
+}
+
+// 动态渲染cityLists
+function createCityList(data) {
+  let cityDom = '';
+  for (let i = 0, len = data.length; i < len; i++) {
+    cityDom += `${createDl(data[i])}`;
+  }
+  return cityDom;
+}
+
+// 创建每个 dl
+function createDl(data) {
+  let dlDom = '';
+  let ddDom = '';
+  for (let i = 0, len = data.cityList.length; i < len; i++) {
+    ddDom += `<dd>${data.cityList[i]}</dd>`;
+  }
+  dlDom += `<dl class="citylist-item clear">
+  <dt>${data.nameStr}</dt>${ddDom}</dl>`;
+  return dlDom;
+}
+
+// 判断缓存中是否有 city false 为无， true 为有
+function hasCity() {
+  return localStorage.getItem('city') == null ? 'false' : 'true';
+}
+
+
+// 动态渲染城市数据
+getCities();
+
+
+
+
+
+
 (function () {
 
   // 当我们点击搜索图标或者按下按键的时候，获取参数,发送请求
@@ -340,36 +263,36 @@ initTabbar(tabbar);
   });
 
 
- // 发送 ajax 请求，动态渲染数据
-function searchByKey(key) {
-  $.ajax({
-    type: 'get',
-    url: SEARCH_BY_KEY,
-    data: {
-      keyword: key
-    },
-    success: function (data) {
-      if (data.status == 0) {
-        // 数据请求成功
-        let itemDom = createListDom(data.data);
-        $('.wrap .list').html(itemDom);
-        scroll.refresh();
-      } else {
-        console.log('数据请求失败');
+  // 发送 ajax 请求，动态渲染数据
+  function searchByKey(key) {
+    $.ajax({
+      type: 'get',
+      url: SEARCH_BY_KEY,
+      data: {
+        keyword: key
+      },
+      success: function (data) {
+        if (data.status == 0) {
+          // 数据请求成功
+          let itemDom = createListDom(data.data);
+          $('.wrap .list').html(itemDom);
+          scroll.refresh();
+        } else {
+          console.log('数据请求失败');
+        }
+      },
+      error: function (err) {
+        console.log('网络繁忙，数据请求失败');
       }
-    },
-    error: function (err) {
-      console.log('网络繁忙，数据请求失败');
-    }
-  });
-}
+    });
+  }
 
-// 创建 dom 
-function createListDom(data) {
-  let itemDom = '';
-  for (let i = 0, len = data.length; i < len; i++) {
-    let item = data[i];
-    itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
+  // 创建 dom 
+  function createListDom(data) {
+    let itemDom = '';
+    for (let i = 0, len = data.length; i < len; i++) {
+      let item = data[i];
+      itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
       <div class="left">\
         <img src="' + item.companyPic + '">\
       </div>\
@@ -380,16 +303,60 @@ function createListDom(data) {
       </div>\
       <div class="right text-center">' + item.minSalary + 'k-' + item.maxSalary + 'k</div>\
     </li>';
+    }
+    return itemDom;
   }
-  return itemDom;
-}
 
-// 创建 scroll 滚动视图
-let scroll = new IScroll('.content', {
-  tap: true,
-  click: true,
-});
+  // 创建 scroll 滚动视图
+  let scroll = new IScroll('.content', {
+    tap: true,
+    click: true,
+  });
 
+  // 进入页面的时候，首先让 cityList 隐藏，获取缓存中选中的 city，否则默认为全国，city: value
+  // 当我们点击城市的时候要显示城市列表，获取缓存中选中的 city先清空 dd 的样式，添加 selected 样式,
+  // 其他的(searchWrap | list | searchList)隐藏，
+  // 显示城市列表并且显示返回按钮
+  // 当点击 dd 时，隐藏返回按钮，隐藏城市列表，其他的显示，dd 添加点击样式
+  // 初始化 函数
+  init();
+
+  function init() {
+    $('.back').css('display', 'none');
+    $('.cityList').css('display', 'none');
+    let $cityIcon = $('.cityOption .selectedCity');
+    if (hasCity() == 'true') {
+      let city = localStorage.getItem('city');
+      $cityIcon.text(city);
+    }
+    $cityIcon.click(function () {
+      $('.cityList').css('display', 'block');
+      $('.searchWrap').css('display', 'none');
+      $('.list').css('display', 'none');
+      $('.searchList').css('display', 'none');
+      $('.cityList dd').removeClass('active');
+      $('.back').css('display', 'block');
+      scroll.refresh();
+    });
+
+    // 给 cityList 下的 dd 添加点击事件
+    $('.cityList').on('click', 'dd', function () {
+      $('.cityList dd').removeClass('selected');
+      $(this).addClass('selected', 'active');
+      localStorage.setItem('city', $(this).text());
+      $('.cityList').css('display', 'none');
+      $('.searchWrap').css('display', 'block');
+      $('.list').css('display', 'block');
+      $('.searchList').css('display', 'block');
+      $('.back').css('display', 'none');
+      window.location.href = './search.html';
+      scroll.refresh();
+    });
+  }
+
+  $('.back').click(function() {
+    window.location.href = './search.html';
+  });
 
 })();
 

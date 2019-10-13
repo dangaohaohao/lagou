@@ -92,7 +92,8 @@
   background-color: #f6f6f6;
   position: absolute;
   left: 0;
-  bottom: 0; }
+  bottom: 0;
+  z-index: 66; }
   .tabbar .list {
     width: 100%;
     height: 100%;
@@ -150,9 +151,46 @@
 
 /*# sourceMappingURL=list.css.map */
 
+.cityList {
+  margin-top: 1px;
+}
+.cityList .citylist-item {
+  width: 100%;
+}
+.cityList .citylist-item dt {
+  width: 100%;
+  height: 54px;
+  line-height: 54px;
+  color: #888;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 0 30px;
+  box-sizing: border-box;
+  font-size: 30px;
+}
+.cityList .citylist-item dd {
+  float: left;
+  width: 33.3%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 34px;
+  color: #444;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cityList .citylist-item dd.active {
+  background: #f0f0f0;
+}
+.cityList .citylist-item dd.selected {
+  background-color: #e7f3f0;
+  color: #333;
+}
+
 .content {
   position: absolute;
-  top: 188px;
+  top: 90px;
   left: 0;
   width: 100%;
   bottom: 90px;
@@ -183,9 +221,6 @@
 }
 
 .searchWrap {
-  position: absolute;
-  top: 98px;
-  left: 0;
   width: 100%;
   height: 98px;
   display: flex;
@@ -193,7 +228,7 @@
   border-bottom: 1px solid #ccc;
 }
 .searchWrap .cityOption {
-  width: 180px;
+  width: 137px;
   height: 98px;
   box-sizing: border-box;
   border-right: 1px solid #ccc;

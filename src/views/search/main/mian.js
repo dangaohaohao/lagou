@@ -47,36 +47,36 @@
   });
 
 
- // 发送 ajax 请求，动态渲染数据
-function searchByKey(key) {
-  $.ajax({
-    type: 'get',
-    url: SEARCH_BY_KEY,
-    data: {
-      keyword: key
-    },
-    success: function (data) {
-      if (data.status == 0) {
-        // 数据请求成功
-        let itemDom = createListDom(data.data);
-        $('.wrap .list').html(itemDom);
-        scroll.refresh();
-      } else {
-        console.log('数据请求失败');
+  // 发送 ajax 请求，动态渲染数据
+  function searchByKey(key) {
+    $.ajax({
+      type: 'get',
+      url: SEARCH_BY_KEY,
+      data: {
+        keyword: key
+      },
+      success: function (data) {
+        if (data.status == 0) {
+          // 数据请求成功
+          let itemDom = createListDom(data.data);
+          $('.wrap .list').html(itemDom);
+          scroll.refresh();
+        } else {
+          console.log('数据请求失败');
+        }
+      },
+      error: function (err) {
+        console.log('网络繁忙，数据请求失败');
       }
-    },
-    error: function (err) {
-      console.log('网络繁忙，数据请求失败');
-    }
-  });
-}
+    });
+  }
 
-// 创建 dom 
-function createListDom(data) {
-  let itemDom = '';
-  for (let i = 0, len = data.length; i < len; i++) {
-    let item = data[i];
-    itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
+  // 创建 dom 
+  function createListDom(data) {
+    let itemDom = '';
+    for (let i = 0, len = data.length; i < len; i++) {
+      let item = data[i];
+      itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
       <div class="left">\
         <img src="' + item.companyPic + '">\
       </div>\
@@ -87,15 +87,59 @@ function createListDom(data) {
       </div>\
       <div class="right text-center">' + item.minSalary + 'k-' + item.maxSalary + 'k</div>\
     </li>';
+    }
+    return itemDom;
   }
-  return itemDom;
-}
 
-// 创建 scroll 滚动视图
-let scroll = new IScroll('.content', {
-  tap: true,
-  click: true,
-});
+  // 创建 scroll 滚动视图
+  let scroll = new IScroll('.content', {
+    tap: true,
+    click: true,
+  });
 
+  // 进入页面的时候，首先让 cityList 隐藏，获取缓存中选中的 city，否则默认为全国，city: value
+  // 当我们点击城市的时候要显示城市列表，获取缓存中选中的 city先清空 dd 的样式，添加 selected 样式,
+  // 其他的(searchWrap | list | searchList)隐藏，
+  // 显示城市列表并且显示返回按钮
+  // 当点击 dd 时，隐藏返回按钮，隐藏城市列表，其他的显示，dd 添加点击样式
+  // 初始化 函数
+  init();
+
+  function init() {
+    $('.back').css('display', 'none');
+    $('.cityList').css('display', 'none');
+    let $cityIcon = $('.cityOption .selectedCity');
+    if (hasCity() == 'true') {
+      let city = localStorage.getItem('city');
+      $cityIcon.text(city);
+    }
+    $cityIcon.click(function () {
+      $('.cityList').css('display', 'block');
+      $('.searchWrap').css('display', 'none');
+      $('.list').css('display', 'none');
+      $('.searchList').css('display', 'none');
+      $('.cityList dd').removeClass('active');
+      $('.back').css('display', 'block');
+      scroll.refresh();
+    });
+
+    // 给 cityList 下的 dd 添加点击事件
+    $('.cityList').on('click', 'dd', function () {
+      $('.cityList dd').removeClass('selected');
+      $(this).addClass('selected', 'active');
+      localStorage.setItem('city', $(this).text());
+      $('.cityList').css('display', 'none');
+      $('.searchWrap').css('display', 'block');
+      $('.list').css('display', 'block');
+      $('.searchList').css('display', 'block');
+      $('.back').css('display', 'none');
+      window.location.href = './search.html';
+      scroll.refresh();
+    });
+  }
+
+  $('.back').click(function() {
+    window.location.href = './search.html';
+  });
 
 })();
