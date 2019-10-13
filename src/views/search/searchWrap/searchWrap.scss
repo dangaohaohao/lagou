@@ -1,0 +1,58 @@
+$mainColor: #00b38a;
+$otherColor: #d2f9f0;
+
+// searchWrap
+.searchWrap {
+  width: 100%;
+  height: 98px;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+
+  // cityOption
+  .cityOption {
+    width: 180px;
+    height: 98px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+
+    .selectedCity {
+      font-size: 36px;
+      color: #444;
+      margin-right: 4px;
+    }
+
+    span.iconfont {
+      font-size: 14px;
+      color: #444;
+    }
+  }
+
+  // searchBox
+  .searchBox {
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0 24px;
+    display: flex;
+
+    input {
+      flex: 1;
+      font-size: 34px;
+      border: none;
+      outline: none;
+      font-weight: normal;
+    }
+
+    span.iconfont {
+      display: inline-block;
+      width: 45px;
+      height: 98px;
+      text-align: center;
+      line-height: 98px;
+      font-size: 30px;
+      color: #ddd;
+    }
+  }
+
+
+}

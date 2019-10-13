@@ -137,6 +137,21 @@ li {
 	top: 0;
 	transform: scaleY(0.5);
 }
+/* 右边框 */
+.border-right {
+	position: relative;
+}
+.border-right:after {
+	content: "";
+	display: block;
+	width: 1px;
+	height: 100%;
+	border-right: 1px solid #ddd;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: scaleY(0.5);
+}
 
 /* 隐藏元素 */
 .hide{

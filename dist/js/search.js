@@ -286,3 +286,5 @@ let tabbar = [{
 initTabbar(tabbar);
 
 })();
+
+
