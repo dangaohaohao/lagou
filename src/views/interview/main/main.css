@@ -1,0 +1,68 @@
+.interviewCategory {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  display: flex;
+  flex-direction: row;
+  background-color: #f0f0f0;
+}
+.interviewCategory li {
+  flex: 1;
+  color: #333;
+  text-align: center;
+  line-height: 88px;
+  font-size: 34px;
+}
+.interviewCategory li.selected {
+  color: #00b38a;
+  background-color: #fff;
+}
+
+.content {
+  position: absolute;
+  top: 178px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: #f0f0f0;
+  overflow: hidden;
+}
+.content .wrap .list .list-item {
+  display: flex;
+  padding: 30px;
+  box-sizing: border-box;
+  background: #fff;
+}
+.content .wrap .list .list-item .left {
+  width: 120px;
+  height: 120px;
+}
+.content .wrap .list .list-item .left img {
+  width: 100%;
+  height: 100%;
+}
+.content .wrap .list .list-item .center {
+  flex: 1;
+  margin-left: 20px;
+}
+.content .wrap .list .list-item .center .title {
+  font-size: 34px;
+  font-weight: bold;
+  color: #333;
+}
+.content .wrap .list .list-item .center .info {
+  height: 60px;
+  line-height: 60px;
+  font-size: 25px;
+  color: #333;
+}
+.content .wrap .list .list-item .center .time {
+  font-size: 20px;
+  color: #888;
+}
+.content .wrap .list .list-item .right {
+  font-size: 26px;
+  color: #00b38a;
+}

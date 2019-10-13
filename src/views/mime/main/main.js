@@ -19,8 +19,8 @@
           console.log('去投递页面');
           break;
         case 1:
-          // window.location.href = './interview.html';
-          console.log('去面试页面');
+          window.location.href = './interview.html';
+          // console.log('去面试页面');
           break;
         case 2:
           // window.location.href = './collect.html';

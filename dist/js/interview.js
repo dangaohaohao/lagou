@@ -167,121 +167,108 @@ function register(tel, code, cb) {
 
 })();
 
-(function() {
-  
-// 首先 tabbar 是动态渲染上去的，后期可能会再进行添加
-
-function initTabbar(data) {
-  let $list = $('.tabbar .list');
-
-  let tabbarTemplate = '<a href="{{href}}" class="list-item text-center {{active}}">\
-<span class="iconfont {{icon}}"></span>\
-<span>{{text}}</span>\
-</a>';
-
-  let tabbarItemTemplate = '';
-
-  // 判断当前的路径
-  let arr = window.location.href.split('/');
-  let page = arr[arr.length-1].split('.');
-  let currentPath = page[0];
-
-for (let i = 0, len = data.length; i < len; i ++) {
-  let item = data[i];
-  let tabbarItemDom = tabbarTemplate.replace(/{{href}}/, item.href);
-  tabbarItemDom = tabbarItemDom.replace(/{{icon}}/, item.icon);
-  tabbarItemDom = tabbarItemDom.replace(/{{text}}/, item.text);
-  tabbarItemDom = tabbarItemDom.replace(/{{active}}/, (currentPath == item.id ? 'active': ''));
-  tabbarItemTemplate += tabbarItemDom;
-}
-
-$list.append(tabbarItemTemplate);
-
-}
-
-
-let tabbar = [{
-    id: 'home',
-    href: './home.html',
-    icon: 'icon-shouye',
-    text: '职位'
-  },
-  {
-    id: 'search',
-    href: './search.html',
-    icon: 'icon-sousuo',
-    text: '搜索'
-  },
-  {
-    id: 'mime',
-    href: './mime.html',
-    icon: 'icon-wode',
-    text: '我的'
-  }
-];
-
-
-initTabbar(tabbar);
-
-})();
-
 (function () {
 
-  // 需要看用户是否登录
-  let isLogin = checkLogin();
-  if (isLogin) {
-    // 登录了 点击去对应的页面
-    $('.login').addClass('hideNone');
+  //   ##### 已经面试职位列表   ##### 将要面试的职位列表
+  // api: /api/user/resume_list
+  // method: GET
+  // 参数： type(Y   0:已经面试, 1: 将要面试)
+  // 返回值 ： message     status     data
+  // INTERVIEW_LIST
 
-    $('#resume').click(function () {
-      // window.location.href = './resume.html';
-      console.log('去编辑简历');
-    });
-
-    $('.list').on('click', '.list-item', function () {
-      let index = $(this).index();
-      switch (index) {
-        case 0:
-          // window.location.href = './deliver.html';
-          console.log('去投递页面');
-          break;
-        case 1:
-          window.location.href = './interview.html';
-          // console.log('去面试页面');
-          break;
-        case 2:
-          // window.location.href = './collect.html';
-          console.log('去收藏页面');
-          break;
+  function getInterviewList(type, cb) {
+    $.ajax({
+      type: 'get',
+      url: INTERVIEW_LIST,
+      data: {
+        type: type
+      },
+      success: function (data) {
+        if (data.status == 0) {
+          cb(data);
+        } else {
+          console.log('请求面试数据失败');
+        }
+      },
+      error: function (err) {
+        console.log('网络繁忙，请求失败');
       }
     });
-
-    // 点击注销
-    $('.loginout').click(function() {
-      loginOut(function() {
-        localStorage.removeItem('isLogin');
-        location.reload();
-      });
-    });
-
-
-  } else {
-    // 未登录 任何页面点击都是跳转去登录页面
-    $('.user').addClass('hideNone');
-    $('.loginout').remove();
-
-    $('.login').click(function () {
-      window.location.href = './login.html';
-      console.log('去登录');
-    });
-
-    $('.list').on('click', '.list-item', function () {
-      window.location.href = './login.html';
-      console.log('去登录');
-    });
-
   }
 
+  // 创建 dom 
+  function createListDom(data) {
+    let itemDom = '';
+    for (let i = 0, len = data.length; i < len; i++) {
+      let item = data[i];
+      itemDom += '  <li class="list-item border-bottom" data-id="' + item.id + '" data-job="' + item.job + '">\
+    <div class="left">\
+      <img src="' + item.companyPic + '">\
+    </div>\
+    <div class="center">\
+      <h3 class="title">' + item.company + '</h3>\
+      <p class="info">' + item.job + '</p>\
+      <p class="time">' + item.publish + '</p>\
+    </div>\
+    <div class="right text-center">' + item.minSalary + 'k-' + item.maxSalary + 'k</div>\
+  </li>';
+    }
+    return itemDom;
+  }
+
+  let interviewScroll = new IScroll('.content', {
+    click: true,
+    tap: true
+  });
+
+  let $list = $('.content .list');
+  let $interviewCategory = $('.interviewCategory');
+  let $interviewed = $('.interviewed');
+  let $interviewing = $('.interviewing');
+
+  // 当点击 interviewCategory 下的 li 时，
+  // 给当前元素添加 selected 样式，兄弟元素移除该样式
+  $interviewCategory.on('click', 'li', function () {
+    $(this).addClass('selected').siblings().removeClass('selected');
+  });
+
+  // 点击已面试，获取已面试列表
+  $interviewed.click(function () {
+    getInterviewList(0, function (data) {
+      let interviewedDom = createListDom(data.data);
+      $list.html(interviewedDom);
+      interviewScroll.refresh();
+    });
+  });
+
+  // 点击未面试，获取未面试列表
+  $interviewing.click(function () {
+    getInterviewList(1, function (data) {
+      let interviewingDom = createListDom(data.data);
+      $list.html(interviewingDom);
+      interviewScroll.refresh();
+    });
+  });
+
+  // 首先渲染已面试的列表
+  getInterviewList(0, function (data) {
+    let interviewedDom = createListDom(data.data);
+    $list.html(interviewedDom);
+    interviewScroll.refresh();
+  });
+
+  // 给每个 list-item 添加点击事件
+   $list.on('click', '.list-item', function() {
+
+    let id = $(this).attr('data-id');
+    let job = $(this).attr('data-job');
+  
+    sessionStorage.setItem('job-params', JSON.stringify({
+      id,
+      job
+    }));
+    window.location.href = './jobDetail.html';
+  });
 
 
 })();

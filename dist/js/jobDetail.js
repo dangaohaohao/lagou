@@ -56,6 +56,12 @@ var LOGOUT_API = HOST + '/api/user/login_out';
 // 搜索职位关键字搜索列表
 var SEARCH_BY_KEY = HOST + '/api/jobs/jobs_list/by_keyword';
 
+// 投递简历
+var DELIVER_RESUME = HOST + '/api/user/delive/resume';
+
+// 面试列表
+var INTERVIEW_LIST = HOST + '/api/user/resume_list';
+
 // 关于用户的操作
 
 // 是否登录
@@ -303,6 +309,46 @@ function register(tel, code, cb) {
     click: true,
     tap: true,
   });
+
+// ##### 投递简历
+// api: /api/user/delive/resume
+// method: GET
+// 参数： id
+// 返回值 ： message     status     data
+// DELIVER_RESUME
+
+  // 点击投递简历，首先判断是否登录
+  // 未登录，则挑转到登录页面，
+  // 登录了则跳转到投递成功的页面 deliver.html
+  $('.footer .sendResume').click(function() {
+    console.log('投递成功');
+    if (!checkLogin()) {
+      window.location.href = './login.html';
+      return;
+    }
+    deliverResume(jobDetail, function() {
+      window.location.href = './deliver.html';
+    });
+  });
+
+  function deliverResume(jobDetail, cb) {
+    $.ajax({
+      type: 'get',
+      url: DELIVER_RESUME,
+      data: {id: jobDetail.id},
+      success: function(data) {
+        if (data.status == 0) {
+          cb();
+        }else {
+          console.log('投递失败');
+        }
+      },
+      error: function (err) {
+        console.log('网络繁忙，请稍后再试');
+      }
+    });
+    return flag;
+  }
 
 
 })();

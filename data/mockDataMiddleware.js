@@ -121,6 +121,38 @@ let map = {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.end(result);
   },
+  // 投递简历
+  '/api/user/delive/resume'(response) {
+    let obj = Mock.mock({
+      message: 'ok',
+      status: 0
+    });
+    let result = JSON.stringify(obj);
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
+    response.end(result);
+  },
+  // 面试列表
+  '/api/user/resume_list'(response) {
+    let obj = Mock.mock({
+      message: 'ok',
+      status: 0,
+      'data|1-10': [
+        {
+          'id|+1': 1,
+          'company': '@ctitle',
+          'companyPic': '@image(120x120, @color, @color, @name)',
+          'job|1': ['前端开发工程师', 'php开发工程师', '产品经理'],
+          'city': '@city',
+          'minSalary|8-10': 0,
+          'maxSalary|10-15': 0,
+          'publish': '@date'
+        }
+      ]
+    })
+    let result = JSON.stringify(obj);
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
+    response.end(result);
+  }
 }
 
 

@@ -56,6 +56,12 @@ var LOGOUT_API = HOST + '/api/user/login_out';
 // 搜索职位关键字搜索列表
 var SEARCH_BY_KEY = HOST + '/api/jobs/jobs_list/by_keyword';
 
+// 投递简历
+var DELIVER_RESUME = HOST + '/api/user/delive/resume';
+
+// 面试列表
+var INTERVIEW_LIST = HOST + '/api/user/resume_list';
+
 // 关于用户的操作
 
 // 是否登录

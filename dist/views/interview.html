@@ -7,31 +7,25 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>拉勾网</title>
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/interview.css">
 </head>
 
 <body>
   <!-- header 占位 -->
   <header class="header text-center">
-    <!-- <span class="iconfont icon-fanhui back-action"></span> -->
-    <h1>拉勾网</h1>
-    <!-- <span class="iconfont icon-shouye home-action"></span> -->
+    <span class="iconfont icon-fanhui back-action"></span>
+    <h1>我的面试</h1>
   </header>
 
-  <!-- filterWrap -->
-  <div class="filter border-bottom text-center"></div>
+  <!-- interviewCategory -->
+  <nav class="interviewCategory">
+    <li class="interviewed selected">已面试</li>
+    <li class="interviewing">将面试</li>
+  </nav>
 
   <!-- content 滚动视图 -->
   <main class="content">
     <div class="wrap">
-
-      <!-- 下拉刷新的结构 -->
-       <div class="refresh">
-        <img src="../assets/arrow.jpg">
-        <span>下拉可以刷新...</span>
-      </div>
-
-      <!-- 需要滚动的内容开头 -->
 
       <ul class="list">
 <!--  模板
@@ -49,33 +43,12 @@
 
       </ul>
 
-
-      <!-- 需要滚动的内容结尾 -->
-
-      <!-- 上拉加载更多的结构 -->
-            <div class="loadmore">
-        <img src="../assets/arrow.jpg">
-        <span>上拉可以加载更多...</span>
-      </div>
-
     </div>
   </main>
 
-
-  <!-- footer -->
-  <footer class="tabbar border-top">
-    <!-- 模板 -->
-    <ul class="list">
-      <!-- <a href="../home/home.html" class="list-item text-center active">
-        <span class="iconfont icon-shouye"></span>
-        <span>职位</span>
-      </a> -->
-    </ul>
-  </footer>
-
   <script src="../lib/zepto.js"></script>
   <script src="../lib/iscroll-probe.js"></script>
-  <script src="../js/home.js"></script>
+  <script src="../js/interview.js"></script>
 
 
 

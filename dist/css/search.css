@@ -151,6 +151,14 @@
 
 /*# sourceMappingURL=list.css.map */
 
+.content {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  bottom: 90px;
+}
+
 .cityList {
   margin-top: 1px;
 }
@@ -186,14 +194,6 @@
 .cityList .citylist-item dd.selected {
   background-color: #e7f3f0;
   color: #333;
-}
-
-.content {
-  position: absolute;
-  top: 90px;
-  left: 0;
-  width: 100%;
-  bottom: 90px;
 }
 
 .searchList {

@@ -49,5 +49,16 @@ module.exports = {
     './src/components/company/company.css',
     // 自身样式
     './src/views/jobDetail/**/*.css'
+  ],
+  deliver: [
+    './src/components/header/header.css',
+    // 自身样式
+    './src/views/deliver/**/*.css'
+  ],
+  interview: [
+    // 组件样式
+    './src/components/header/header.css',
+    // 自身样式
+    './src/views/interview/**/*.css'
   ]
 }

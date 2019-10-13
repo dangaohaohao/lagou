@@ -48,5 +48,18 @@ module.exports = {
     './src/components/header/header.js',
     './src/components/company/company.js',
     './src/views/jobDetail/**/*.js'
+  ],
+  deliver: [
+    './src/utils/flexible.js',
+    './src/utils/api.js',
+    './src/components/header/header.js',
+    './src/views/deliver/**/*.js'
+  ],
+  interview: [
+    './src/utils/flexible.js',
+    './src/utils/api.js',
+    './src/utils/user.js',
+    './src/components/header/header.js',
+    './src/views/interview/**/*.js'
   ]
 }
