@@ -175,121 +175,115 @@ function register(tel, code, cb) {
 
 })();
 
+
+
 (function() {
-  
-// 首先 tabbar 是动态渲染上去的，后期可能会再进行添加
 
-function initTabbar(data) {
-  let $list = $('.tabbar .list');
-
-  let tabbarTemplate = '<a href="{{href}}" class="list-item text-center {{active}}">\
-<span class="iconfont {{icon}}"></span>\
-<span>{{text}}</span>\
-</a>';
-
-  let tabbarItemTemplate = '';
-
-  // 判断当前的路径
-  let arr = window.location.href.split('/');
-  let page = arr[arr.length-1].split('.');
-  let currentPath = page[0];
-
-for (let i = 0, len = data.length; i < len; i ++) {
-  let item = data[i];
-  let tabbarItemDom = tabbarTemplate.replace(/{{href}}/, item.href);
-  tabbarItemDom = tabbarItemDom.replace(/{{icon}}/, item.icon);
-  tabbarItemDom = tabbarItemDom.replace(/{{text}}/, item.text);
-  tabbarItemDom = tabbarItemDom.replace(/{{active}}/, (currentPath == item.id ? 'active': ''));
-  tabbarItemTemplate += tabbarItemDom;
-}
-
-$list.append(tabbarItemTemplate);
-
-}
+// ###### 公司基本信息 自己加的
+// api: /api/company_info/by_id
+// method： GET
+// 参数：id
+// 返回值： message     status     data
+// COMPANY_INFO
 
 
-let tabbar = [{
-    id: 'home',
-    href: './home.html',
-    icon: 'icon-shouye',
-    text: '职位'
-  },
-  {
-    id: 'search',
-    href: './search.html',
-    icon: 'icon-sousuo',
-    text: '搜索'
-  },
-  {
-    id: 'mime',
-    href: './mime.html',
-    icon: 'icon-wode',
-    text: '我的'
-  }
-];
-
-
-initTabbar(tabbar);
-
-})();
-
-(function () {
-
-  // 需要看用户是否登录
-  let isLogin = checkLogin();
-  if (isLogin) {
-    // 登录了 点击去对应的页面
-    $('.login').addClass('hideNone');
-
-    $('#resume').click(function () {
-      // window.location.href = './resume.html';
-      console.log('去编辑简历');
-    });
-
-    $('.list').on('click', '.list-item', function () {
-      let index = $(this).index();
-      switch (index) {
-        case 0:
-          // window.location.href = './deliver.html';
-          console.log('去投递页面');
-          break;
-        case 1:
-          window.location.href = './interview.html';
-          // console.log('去面试页面');
-          break;
-        case 2:
-          // window.location.href = './collect.html';
-          console.log('去收藏页面');
-          break;
+function getCompanyInfo(id, cb) {
+  $.ajax({
+    type: 'get',
+    url: COMPANY_INFO,
+    data: {id: id},
+    success: function(data) {
+      if (data.status == 0) {
+        cb();
+      }else {
+        console.log('数据请求失败');
       }
-    });
+    },
+    error: function() {
+      console.log('网络繁忙，请稍后再试');
+    }
+  });
+}
 
-    // 点击注销
-    $('.loginout').click(function() {
-      loginOut(function() {
-        localStorage.removeItem('isLogin');
-        location.reload();
-      });
-    });
-
-
-  } else {
-    // 未登录 任何页面点击都是跳转去登录页面
-    $('.user').addClass('hideNone');
-    $('.loginout').remove();
-
-    $('.login').click(function () {
-      window.location.href = './login.html';
-      console.log('去登录');
-    });
-
-    $('.list').on('click', '.list-item', function () {
-      window.location.href = './login.html';
-      console.log('去登录');
-    });
-
-  }
+let companyScroll = new IScroll('.content', {
+  tap: true,
+  click: true
+});
 
 
 
 })();
+
+
+// 当点击 tag 的时候，发送 ajax 请求数据
+
+// ##### 查询公司的职位列表
+// api: /api/jobs/list_by_company
+// method: GET
+// 参数： id(Y)   category_id(Y)
+// 返回值：  message     status     data
+// COMPANY_JOB_LIST
+
+// 先暂时这样
+
+function getCompanyJobList(id, category_id, cb) {
+  $.ajax({
+    type: 'get',
+    url: COMPANY_JOB_LIST,
+    data: {id: id, category_id: category_id},
+    success: function(data) {
+      if (data.status == 0) {
+        cb(data.data);
+      }else {
+        console.log('获取公司职位列表出错');
+      }
+    },
+    error: function(err) {
+      console.log('网络繁忙, 请稍后再试');
+    }
+  });
+}
+
+ // 创建 dom 
+ function createListDom(data) {
+  let itemDom = '';
+  for (let i = 0, len = data.length; i < len; i++) {
+    let item = data[i];
+    itemDom += '  <li class="list-item border-bottom" data-id="'+item.id+'" data-job="'+item.job+'">\
+    <div class="center">\
+      <h3 class="title">' + item.job + '</h3>\
+      <p class="time">' + item.publish + '</p>\
+    </div>\
+    <div class="right text-center">' + item.minSalary + 'k-' + item.maxSalary + 'k</div>\
+  </li>';
+  }
+  return itemDom;
+}
+
+// 渲染首屏页面
+getCompanyJobList(1, 1, function(data) {
+  let listDom = createListDom(data);
+  $('.list').html(listDom);
+});
+
+$('.classify').on('click', '.tag', function() {
+  $(this).addClass('selected').siblings().removeClass('selected');
+  getCompanyJobList(3, 4, function(data) {
+    let listDom = createListDom(data);
+    $('.list').html(listDom);
+  })
+});
+
+let $list = $('.content .list');
+  // 给每一个 item 添加点击事件
+  $list.on('click', '.list-item', function() {
+
+  let id = $(this).attr('data-id');
+  let job = $(this).attr('data-job');
+
+  sessionStorage.setItem('job-params', JSON.stringify({
+    id,
+    job
+  }));
+  window.location.href = './jobDetail.html';
+});

@@ -7,6 +7,7 @@ module.exports = [
   './src/views/jobDetail/*.html',
   './src/views/deliver/*.html',
   './src/views/interview/*.html',
+  './src/views/company/*.html',
 ]
   
 

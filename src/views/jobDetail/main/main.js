@@ -145,6 +145,13 @@
     return flag;
   }
 
+  // 点击公司进入公司页面
+  $('.wrap').on('click', '.company', function() {
+     // 把 公司 id 写到缓存中
+     localStorage.setItem('companyId', jobDetail.id);
+     window.location.href = './company.html';
+  });
+
 
 })();
 

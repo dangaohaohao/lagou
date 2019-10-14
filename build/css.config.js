@@ -60,5 +60,12 @@ module.exports = {
     './src/components/header/header.css',
     // 自身样式
     './src/views/interview/**/*.css'
+  ],
+  company: [
+    // 组件样式
+    './src/components/header/header.css',
+    './src/components/company/company.css',
+    // 自身样式
+    './src/views/company/**/*.css'
   ]
 }

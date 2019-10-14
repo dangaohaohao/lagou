@@ -61,5 +61,13 @@ module.exports = {
     './src/utils/user.js',
     './src/components/header/header.js',
     './src/views/interview/**/*.js'
+  ],
+  company: [
+    './src/utils/flexible.js',
+    './src/utils/api.js',
+    './src/utils/user.js',
+    './src/components/header/header.js',
+    './src/components/company/company.js',
+    './src/views/company/**/*.js'
   ]
 }

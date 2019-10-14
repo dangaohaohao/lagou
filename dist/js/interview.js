@@ -62,6 +62,14 @@ var DELIVER_RESUME = HOST + '/api/user/delive/resume';
 // 面试列表
 var INTERVIEW_LIST = HOST + '/api/user/resume_list';
 
+// 查询公司的职位列表
+var COMPANY_JOB_LIST = HOST + '/api/jobs/list_by_company';
+
+// 查询公司基本信息
+var COMPANY_INFO = HOST + '/api/company_info/by_id';
+
+
+
 // 关于用户的操作
 
 // 是否登录
